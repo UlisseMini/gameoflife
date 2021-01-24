@@ -22,6 +22,7 @@ void* my_malloc(size_t size, char* file, int line) {
 void my_free(void* ptr, char* file, int line) {
   if (ptr == NULL) {
     fprintf(stderr, "[%s:%d] attempt to free null ptr\n", file, line);
+    exit(EXIT_FAILURE);
   }
 
   free(ptr);
