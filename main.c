@@ -39,8 +39,6 @@ void my_free(void* ptr, char* file, int line) {
 #define malloc(size) my_malloc(size, __FILE__, __LINE__)
 #define free(ptr) my_free(ptr, __FILE__, __LINE__)
 
-/* The program */
-
 /* How big the grid should be, 40 looks good on my split tmux terminal. */
 #define N 40
 
@@ -126,7 +124,7 @@ int main() {
   E_Cell** world = new_world();
   E_Cell** n_world = new_world();
 
-  /* Create glider */
+  /* Create glider, Note that we index by [col][row], or [y][x] */
   world[19][19] = ALIVE;
   world[20][20] = ALIVE;
   world[21][20] = ALIVE;
