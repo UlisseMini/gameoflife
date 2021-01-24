@@ -98,6 +98,9 @@ int main() {
   world[21][19] = ALIVE;
   world[21][18] = ALIVE;
 
+  /* Print the world, we do this before asserts to make debugging easier */
+  print_world(world);
+
   /* Make sure neighbors is working correctly */
   assert(neighbors(world, 21, 18, ALIVE) == 1);
   assert(neighbors(world, 21, 19, ALIVE) == 3);
@@ -105,17 +108,17 @@ int main() {
 
   /* Alternate between overwriting world, and n_world */
   for (int steps = 0; steps < 80; steps++) {
-    if (steps % 2 == 0) { 
-      print_world(world);
-      step_world(world, n_world);
-    } else {
-      print_world(n_world);
-      step_world(n_world, world);
-    }
     printf("\x1b[%dA", N); /* Escape code for up N lines */
     usleep(1000*100); /* Sleep for 100000microseconds = 100ms */
+
+    step_world(world, n_world);
+    print_world(n_world);
+
+    /* For the next iteration, we swap world and n_world */
+    E_Cell** old_world = world;
+    world = n_world;
+    n_world = old_world;
   }
-  print_world(n_world);
 
   free_world(world);
   free_world(n_world);
